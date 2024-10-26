@@ -15,7 +15,7 @@
 import os
 from datetime import datetime
 import tkinter as tk
-from tkinter import filedialog, messagebox, simpledialog, Image, ImageTk
+from tkinter import filedialog, messagebox, simpledialog, Image
 #from PIL import Image, ImageTk
 
 #defining directories
@@ -33,10 +33,6 @@ os.makedirs(DATA_DIR, exist_ok=True)
 os.makedirs(IMAGE_DIR, exist_ok=True)
 os.makedirs(MEAL_IMAGES_DIR, exist_ok=True)
 os.makedirs(WEIGHIN_IMAGES_DIR, exist_ok=True)
-
-#----------------------------------------------------------------------------------------------------------------------------------------
-#----------------------------------------------------------TO BE CONTINUED---------------------------------------------------------------
-#----------------------------------------------------------------------------------------------------------------------------------------
 
 #Creating the meals page:
 #   -Made this after the button handlers
@@ -133,7 +129,7 @@ def update_meal_list():
         if os.path.exists(meal['image_path']):
             img = Image.open(meal['image_path'])
             img.thumbnail((50, 50))
-            img = ImageTk.PhotoImage(img)
+            img = Image.PhotoImage(img)
             img_label = tk.Label(frame, image=img)
             img_label.image = img
             img_label.pack(side="left", padx=5)
