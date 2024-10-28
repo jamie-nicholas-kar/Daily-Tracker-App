@@ -26,6 +26,7 @@ SPENDING_FILE=os.path.join(DATA_DIR, "SPENDING.txt")
 DAILIES_FILE=os.path.join(DATA_DIR, "DAILY_ACTIVITIES.txt")
 MEAL_IMG_DIR=os.path.join(IMG_DIR, "MEAL_IMG")
 WEIGHT_IMG_DIR=os.path.join(IMG_DIR, "WEIGHINS")
+FIRST_RUN_FILE=os.path.join(DATA_DIR, "FIRST_RUN.txt") # This will be used when the app is first run
 
 #code for creating the directory files of they don't exist on your computer
 os.makedirs(DATA_DIR, exist_ok=True)
@@ -47,8 +48,27 @@ def weight_tracking():
     print(".")
 def dailies_tracking():
     print(".")
+# handler for when the rules button is clicked/ when the user opens the app for the first time
 def show_rules():
-    print(".")
+    rules_window=tk.Toplevel()
+    rules_window.title("Regimen rules")
+    rules_window.geometry("1920x1080")
+    tk.Label(rules_window, text="Welcome to your new Daily tracker app! Here are some simple guideleines:\n "
+                                 "1. Waking up and sleeping: Weekdays at 5:30am, weekends at 7:00am. This is so I get time to get some morning exercise in.\n"
+                                 "2. Workouts: Have to be done everyday. This is because if I miss even a single day, there’s a high probability of never continuing again.\n"
+                                 "3. Eating and fasting: For the most part, meals will be limited to only supper. For 2 days of the week, there will be fasting(i.e. No food at all). These will be picked at random using a Dice Roller . Portions will be measured using the smallest container in the kitchen.\n"
+                                 "4. Social media and work: Social media will be locked from Monday midnight to noon friday. I’ve found the source of my slump has been how I compare myself to the lives of others that they post. I’m trying to get off that. Instead, I’m going to try to focus more on work I should get done.\n"
+                                 "5. Vices and addictions: I should take this period to shed off my addictions with my weight. My phone will be on the other side of the table when I go to sleep, and I will actively pull away from my triggers.\n"
+                                 "6. Spending: No more spending money carelessly with the excuse that food is taken care of. I will instead save up to things I need. There will be gifts for every 5 and 10kg loss milestone, but these gifts will not be food-based. Mainly clothing or experience based.These should not be prioritized over things I need though.",
+                                 justify="left").pack(padx=20, pady=20)
+    tk.Button(rules_window, text="Got it.", command=rules_window.destroy).pack(pady=20)
+def set_first_run_complete():
+    with open(FIRST_RUN_FILE, "w") as file:
+        file.write("If you are seeing this, the app has already been opened once before.")
+if not os.path.exists(FIRST_RUN_FILE):
+    show_rules()
+    set_first_run_complete()
+
 #----------------------------------------------------------------------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------------------------------------------------------------------
@@ -63,15 +83,14 @@ root.title("Daily tracker")
 root.geometry("400x500")
 
 #code for creating the buttons
-meals_button = tk.Button(root, text="Meals", command=meal_tracking, width="20", height="2").pack(pady=20)
-exercise_button = tk.Button(root, text="Exercise", command=exercise_tracking, width="20", height="2").pack(pady=20)
-weight_button = tk.Button(root, text="weight", command=weight_tracking, width="20", height="2").pack(pady=20)
-dailies_button = tk.Button(root, text="Day's notes", command=dailies_tracking, width="20", height="2").pack(pady=20)
+meals_button=tk.Button(root, text="Meals", command=meal_tracking, width="20", height="2").pack(pady=20)
+exercise_button=tk.Button(root, text="Exercise", command=exercise_tracking, width="20", height="2").pack(pady=20)
+weight_button=tk.Button(root, text="weight", command=weight_tracking, width="20", height="2").pack(pady=20)
+dailies_button=tk.Button(root, text="Day's notes", command=dailies_tracking, width="20", height="2").pack(pady=20)
 
 #code for the rules and exit button
-bottom_frame = tk.Frame(root).pack(side="bottom", fill="x", pady=10)
-rules_button = tk.Button(bottom_frame, text="Rules", command=show_rules, width=10, height=1, bg="blue").pack(side="left", padx=10)
-exit_button = tk.Button(bottom_frame, text="Exit", command=exit, width=10, height=1, bg="red").pack(side="right", padx=10)
+bottom_frame=tk.Frame(root).pack(side="bottom", fill="x", pady=10)
+rules_button=tk.Button(bottom_frame, text="Rules", command=show_rules, width=10, height=1, bg="blue").pack(side="left", padx=10)
+exit_button=tk.Button(bottom_frame, text="Exit", command=exit, width=10, height=1, bg="red").pack(side="right", padx=10)
 
 root.mainloop()
-
