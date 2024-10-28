@@ -13,10 +13,12 @@
 
 #imports
 import os
+from calendar import month, Calendar
 from datetime import datetime
 import tkinter as tk
+from importlib.resources import contents
 from tkinter import filedialog, messagebox, simpledialog, Image
-#from PIL import Image, ImageTk
+from matplotlib import thumbnail
 
 #defining directories
 DATA_DIR = r"D:\tracker data\text data"
@@ -126,11 +128,11 @@ def update_meal_list():
     for meal in meals:
         frame = tk.Frame(meal_frame)
         frame.pack(fill="x", pady=5)
-        if os.path.exists(meal['image_path']):
-            img = Image.open(meal['image_path'])
+        if os.path.exists(meal['img_path']):
+            img = Image.open(meal['img_path'])
             img.thumbnail((50, 50))
-            img = Image.PhotoImage(img)
-            img_label = tk.Label(frame, image=img)
+            img = ImageTk.PhotoImage(img)
+            img_label = tk.Label(frame, Image=img)
             img_label.image = img
             img_label.pack(side="left", padx=5)
         else:
@@ -140,6 +142,56 @@ def update_meal_list():
         meal_label = tk.Label(frame, text=meal_info, anchor="w", justify="left")
         meal_label.pack(side="left", padx=5)
     tk.Button(meal_frame, text="Add meal", command=add_meal, bg="lightgrey").pack(pady=10)
+
+# code for viewing records using a calendar
+def view_records():
+    def date_select():
+        selected_date = cal.selection_get()
+        load_meals_for_date(selected_date())
+        calendar_window.destroy()
+    calendar_window = tk.Toplevel(root)
+    calendar_window.title("select date: ")
+    cal = Calendar(calendar_window, selectmode="day", year=datetime.now().year, month=datetime.now().month, day=datetime.now().day)
+    cal.pack(pady=10)
+    tk.Button(calendar_window, text="select date", command=date_select).pack(pady=5)
+
+def load_meals_for_date(selected_date):
+    meals = []
+    date_str = selected_date.strftime('%Y-%m-%d')
+    if os.path.exists(MEALS_FILE):
+        with open(MEALS_FILE, 'r') as file:
+            for line in file:
+                date, time, meal_type, contents, notes, img_path = line.strip().split(', ')
+                if date == date_str:
+                    meals.append({
+                        "date": date,
+                        "time": time,
+                        "type": meal_type,
+                        "contents": contents,
+                        "notes": notes,
+                        "image_path": img_path
+                    })
+    for widget in meal_frame.winfo_children():
+        widget.destroy()
+    if meals:
+        for meal in meals:
+            frame = tk.Frame(meal_frame)
+            frame.pack(fill="x", pady=5)
+            if os.path.exists(meal['img_path']):
+                img = Image.open(meal['image_path'])
+                img.thumbnail((50,50))
+                img = ImageTk.PhotoImage(img)
+                img_label = tk.Label(frame, image=img)
+                img_label.image = img
+                img_label.pack(side="left", padx=5)
+            else:
+                img_label = tk.Label(frame, text="No image", width=10, height=5, bg="grey")
+                img_label.pack(side="left", padx=5)
+            meal_info = f"{meal['type']} at {meal['time']} - {meal['contents']} - {meal['notes']}"
+            meal_label = tk.Label(frame, text=meal_info, anchor="w", justify="left")
+            meal_label.pack(side="left", padx=5)
+    else:
+        tk.Label(meal_frame, text="No records found on this date.")
 
 #Creating the button handlers:
 #   - Made this after the buttons for the home page
@@ -153,12 +205,6 @@ def meal_tracking():
     global meal_frame
     meal_frame = tk.Frame(meal_window)
     meal_frame.pack(fill="both", expand=True)
-    
-    def view_records():
-        date = simpledialog.askstring("View records", "Enter a date (YYYY-MM-DD): ")
-        if date:
-            pass  # Placeholder. Will finish later
-    
     def add_fasting_day():
         day = simpledialog.askinteger("Fasting day", "Enter day number: 0-Monday, 1-Tuesday, ..., 6-Sunday")
         if day is not None and 0 <= day <= 6:
