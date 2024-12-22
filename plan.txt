@@ -1,0 +1,60 @@
+Daily Planner App
+Goals:
+    1. Using the development of this program to teach myself web app dev basics
+    2. To create a comprehensive platform that will track the user's daily activities (e.g. food, exercise e.t.c) to be decided by the user
+
+App functionalities:
+- The app will work like a to-do list of sorts. Daily activities will have checkboxes to be checked or left unchecked. It will use a calendar
+    system to lock out checkboxes for days past and in future.
+- Will have an app bar on top for access to user profile and main menu.
+- the opening page will show the activities of the day, or a link to the page the user will use to update their daily activities list.
+- light mode and dark mode
+- a milestone and rewards system set by the user.
+- a notification system while using the app
+- a diary system
+- log in and register
+- Smooth UI transitions.
+
+Page layout:
+(a) App bar:
+    - at the top of the web page at all times.
+    - Light purple in light mode, dark blue in dark mode.
+    - Left will have widget for side menu.
+    - right will have profile picture and logout option.
+
+(b) Side menu:
+    - Will have options for more detailed pages, such as exercise, food, diary, milestones and page settings
+    - Will transition out of view if the user clicks outside its borders
+
+(c) Home page:
+    - Will list out daily activities and checkboxes for whether they have been accomplished or not.
+    - If there are no activities specified for the user, a link to the page to specify will be provided instead.
+    - will show pictures of meals eaten during that day and time.
+
+(d) Contacts bar:
+    - At the bottom of the web page at all times.
+    - Light purple in light mode, dark blue in dark mode.
+    - Will have dev contact info.
+
+(e) Daily activities page:
+    - This is where the user will create and update their daily activities.
+    - Accessed from the side menu.
+    - will show a list of already-created activities and a plus sign on them to update.
+    - will have an "add new activity" button that will create a new entry to the list.
+    - enties must have been filled before being accepted. if not filled they will be deleted.
+
+(f) meals page:
+    - This is where the user will update their meal log.
+    - Accessed from the side menu.
+    - will show a list of already-created meals and a plus sign on them to update.
+    - will have an "add new meal" button that will create a new entry to the list.
+    - Meal log entry will have drop boxes to select type of meal (breakfast, lunch, dinner, snack) and time selector, as well as a space to upload a picture of the meal.
+    - will be refreshed at midnight every day.
+
+(g) Exercises page:
+    - This is where the user will log their workouts.
+    - Accessed from the side menu.
+    - will work similar to the home page, in that it will show checkboxes for different exercises added by the user for them to check when done, and will have a button to add a new workout to the list.
+
+(h) Diary page:
+    - 
