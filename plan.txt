@@ -57,4 +57,15 @@ Page layout:
     - will work similar to the home page, in that it will show checkboxes for different exercises added by the user for them to check when done, and will have a button to add a new workout to the list.
 
 (h) Diary page:
-    - 
+    - Will be a space like a word document, where the user will freely write their experiences for the day.
+    - Accessed from the side menu.
+    - Refreshes daily.
+
+(i) Milestones and rewards page:
+    - Will be a space where users can view and update their milestones and their set rewards for hitting them.
+    - Accessed from the side menu.
+    - layout to be decided (this will be updated then.)
+
+(j) System settings page:
+    - Accessed from the side menu.
+    - allows the user to personalize user interface, (eg. theme, font)
